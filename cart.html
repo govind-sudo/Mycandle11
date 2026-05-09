@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Your Cart — Glow &amp; Scent</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta name="description" content="Glow &amp; Scent - Handcrafted soy candles for every mood." />
+  <meta name="theme-color" content="#7b5e57" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary:     #7b5e57;
+      --accent:      #7b5e57;
+      --accent-dark: #5e443e;
+      --bg:          #fdfaf8;
+      --glass:       rgba(255, 255, 255, 0.65);
+      --shadow:      0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Open Sans', sans-serif; background: var(--bg); color: #333; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ══════════════════════════════════════
+       MODERN FLOATING PILL NAV
+    ══════════════════════════════════════ */
+    nav {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,250,245,0.88);
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+      border-radius: 20px;
+      position: fixed;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000000;
+      padding: 10px 30px;
+      width: min(1200px, calc(100vw - 24px));
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-shrink: 0;
+    }
+    .mobile-actions, .mobile-auth-row { display: none; }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: bold; color: #3b2f2f;
+      white-space: nowrap; flex-shrink: 0;
+    }
+
+    .menu-toggle {
+      font-size: 1.8rem; cursor: pointer; display: none;
+      color: #3b2f2f; background: none; border: none;
+      line-height: 1; flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex; gap: 1.2rem; align-items: center;
+    }
+
+    nav a {
+      color: #3b2f2f; font-weight: 600; font-size: 0.95rem;
+      position: relative; transition: color 0.3s ease; white-space: nowrap;
+    }
+    nav a::after {
+      content: ""; position: absolute;
+      width: 0; height: 2px; bottom: -4px; left: 0;
+      background-color: var(--primary); transition: width 0.3s ease;
+    }
+    nav a:hover::after { width: 100%; }
+    nav a:hover { color: var(--primary); }
+
+    .cart-icon::after, .btn-login::after, .btn-signup::after { display: none; }
+
+    .nav-auth-btns { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+
+    .btn-login {
+      padding: 0.4rem 1.1rem; border: 2px solid var(--primary);
+      background: transparent; color: var(--primary);
+      border-radius: 20px; font-weight: 700; font-size: 0.88rem;
+      cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+    }
+    .btn-login:hover { background: var(--primary); color: white; }
+
+    .btn-signup {
+      padding: 0.4rem 1.1rem; border: 2px solid var(--primary);
+      background: var(--primary); color: white !important;
+      border-radius: 20px; font-weight: 700; font-size: 0.88rem;
+      cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+    }
+    .btn-signup:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
+    .cart-icon {
+      display: flex; align-items: center; position: relative;
+      color: #3b2f2f; cursor: pointer; font-size: 1.4rem;
+      transition: transform 0.3s ease, color 0.3s ease; flex-shrink: 0;
+    }
+    .cart-icon:hover { transform: scale(1.1); color: var(--primary); }
+
+    .cart-count {
+      position: absolute; top: -16px; right: -9px;
+      font-size: 0.8rem; font-weight: bold; color: var(--accent-dark);
+    }
+
+    .profile-wrapper { position: relative; display: flex; align-items: center; flex-shrink: 0; }
+    .profile-icon {
+      font-size: 1.7rem; color: #3b2f2f; cursor: pointer;
+      transition: transform 0.3s ease, color 0.3s ease; line-height: 1;
+    }
+    .profile-icon:hover { transform: scale(1.1); color: var(--primary); }
+
+    .profile-menu {
+      display: none; flex-direction: column;
+      position: absolute; top: 48px; right: 0;
+      background: white; box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      border-radius: 12px; overflow: hidden; z-index: 1100;
+      min-width: 160px; animation: fadeInMenu 0.25s ease;
+    }
+
+    /* Match index.html profile dropdown defaults */
+    #profileMenu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: calc(100% + 14px);
+      right: 0;
+      background: white;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      border-radius: 12px;
+      overflow: hidden;
+      z-index: 9999999;
+      min-width: 180px;
+      animation: fadeInMenu 0.25s ease;
+    }
+    .profile-menu .user-greeting {
+      padding: 0.75rem 1rem 0.5rem; font-size: 0.82rem;
+      color: #888; font-weight: 600; border-bottom: 1px solid #f0e8e4;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .profile-menu a, .profile-menu button {
+      display: block; width: 100%; padding: 0.75rem 1rem;
+      color: #3b2f2f; font-weight: 600; font-size: 0.92rem;
+      background: none; border: none; text-align: left; cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .profile-menu a::after, .profile-menu button::after { display: none; }
+    .profile-menu a:hover, .profile-menu button:hover { background: #f5ede9; }
+    .profile-menu .logout-btn { color: #c0392b; border-top: 1px solid #f0e8e4; }
+
+    @keyframes fadeInMenu {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile — inline dropdown */
+    @media (max-width: 768px) {
+      nav { width: calc(100vw - 16px); padding: 0.6rem 1rem; border-radius: 14px; top: 8px; }
+      .nav-center { flex: 0; }
+      .menu-toggle { display: block; margin-left: auto; transform: translateX(4px); }
+      .nav-right { display: none; }
+      .mobile-actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      .mobile-auth-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        width: 100%;
+      }
+      .nav-links {
+        display: none; flex-direction: column;
+        justify-content: flex-start;
+        background: rgba(255,250,245,0.97); backdrop-filter: blur(12px);
+        position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+        text-align: center; padding: 1rem; border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12); z-index: 999; gap: 0.8rem;
+      }
+      .nav-links.show { display: flex; }
+      .mobile-actions .cart-icon { margin: 0 0 0.2rem 0; }
+      .mobile-actions .cart-icon { width: 100%; justify-content: center; }
+      .mobile-actions .btn-login,
+      .mobile-actions .btn-signup { padding: 0.35rem 1rem; }
+      nav a { font-size: 1.05rem; padding: 0.3rem 0; }
+      nav a::after { display: none; }
+      .nav-auth-btns { flex-direction: row; justify-content: center; width: 100%; }
+      .logo { font-size: 1.2rem; }
+    }
+
+    /* ── Cart container ── */
+    .cart-container {
+      max-width: 1100px; margin: 0 auto;
+      padding: 7rem 2rem 2rem;
+    }
+
+    .cart-container > h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; margin-bottom: 2rem;
+      color: #3b2f2f; text-align: left;
+      border-bottom: 1px solid #f0e8e4; padding-bottom: 0.8rem;
+    }
+
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ── Cart item list ── */
+    .cart-items-wrapper { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .cart-item {
+      display: flex; align-items: center; gap: 1.2rem;
+      background: white; padding: 1.2rem; border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.04);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      transition: box-shadow 0.3s, transform 0.2s;
+    }
+    .cart-item:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+    .cart-item img {
+      width: 90px; height: 90px;
+      border-radius: 12px; object-fit: cover; flex-shrink: 0;
+      background: #fdfaf8; border: 1px solid #f0e8e4;
+    }
+
+    .cart-item-info { flex: 1; }
+    .cart-item-info h3 { margin: 0 0 0.4rem; font-size: 1.15rem; color: #3b2f2f; font-family: 'Playfair Display', serif; }
+    .cart-item-info p  { margin: 0 0 0.6rem; font-size: 0.9rem; color: #777; }
+
+    /* Qty controls */
+    .qty-controls { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.4rem; }
+    .qty-btn {
+      width: 30px; height: 30px; border-radius: 8px;
+      border: 1.5px solid #d4bfba; background: #fff;
+      color: var(--accent); font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; line-height: 1;
+    }
+    .qty-btn:hover { background: #fdf8f5; border-color: var(--accent); }
+    .qty-num { font-weight: 600; font-size: 1rem; min-width: 24px; text-align: center; color: #3b2f2f; }
+
+    .cart-item-price {
+      font-weight: bold; font-size: 1.1rem;
+      color: var(--accent-dark); margin-right: 1rem; white-space: nowrap;
+    }
+
+    .remove-btn {
+      background: #fff0f0; border: none; color: #d64545;
+      width: 36px; height: 36px; border-radius: 10px;
+      font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .remove-btn:hover { background: #ffe0e0; color: #b22222; }
+
+    /* ── Order Summary ── */
+    .cart-summary {
+      background: white; padding: 1.8rem; border-radius: 20px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.03);
+      position: sticky; top: 100px;
+    }
+    .cart-summary h2 { margin: 0 0 1.2rem; color: #3b2f2f; font-size: 1.4rem; font-family: 'Playfair Display', serif; border-bottom: 1px solid #f0e8e4; padding-bottom: 0.8rem; }
+    
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 1rem; color: #666; font-size: 0.95rem; }
+    .summary-row.total-row {
+      margin-top: 1rem; padding-top: 1.2rem;
+      border-top: 1px dashed #d4bfba;
+      font-weight: 700; color: #3b2f2f; font-size: 1.25rem;
+    }
+
+    .checkout-btn {
+      display: flex; justify-content: center; align-items: center; gap: 0.5rem;
+      width: 100%; background: linear-gradient(135deg, #7b5e57 0%, #5e443e 100%);
+      color: white; font-size: 1.05rem; font-weight: bold; padding: 1rem;
+      border-radius: 12px; margin-top: 1.5rem; border: none;
+      transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; cursor: pointer;
+    }
+    .checkout-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(123, 94, 87, 0.3); }
+
+    .payment-methods {
+      display: flex; justify-content: center; gap: 0.8rem; margin-top: 1.2rem;
+      color: #999; font-size: 1.6rem;
+    }
+
+    /* ── Empty state ── */
+    .empty-cart { text-align: center; padding: 4rem 1rem; background: white; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); margin-top: 2rem; }
+    .empty-icon { font-size: 4rem; color: #d4bfba; margin-bottom: 1.5rem; }
+    .empty-cart h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #3b2f2f; margin-bottom: 0.5rem; }
+    .empty-cart p { color: #888; font-size: 1rem; margin-bottom: 1.5rem; }
+    .shop-now-btn {
+      display: inline-block; padding: 0.8rem 2.2rem; background: var(--primary); color: white;
+      border-radius: 50px; font-weight: 700; transition: background 0.3s, transform 0.2s; text-decoration: none;
+    }
+    .shop-now-btn:hover { background: var(--accent-dark); transform: translateY(-2px); color: white; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .cart-layout { grid-template-columns: 1fr; }
+      .cart-summary { position: static; }
+    }
+    @media (max-width: 600px) {
+      .cart-container { padding: 6rem 1rem 2rem; }
+      .cart-item { flex-wrap: wrap; gap: 1rem; padding: 1rem; }
+      .cart-item img { width: 70px; height: 70px; }
+      .cart-item-price { margin-left: auto; margin-right: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ MODERN FLOATING PILL NAV ══ -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Glow &amp; Scent</a>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">&#9776;</button>
+      <div class="nav-center">
+        <div class="nav-links" id="navLinks">
+          <a href="index.html">Home</a>
+          <a href="moreproduct.html">Products</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#contact">Contact</a>
+          <div class="mobile-actions">
+            <a href="cart.html" class="cart-icon" title="Cart"><i class="fas fa-shopping-cart"></i></a>
+            <div class="mobile-auth-row" id="mobileAuthRow">
+              <a href="login2.html" class="btn-login">Login</a>
+              <a href="login2.html?mode=signup" class="btn-signup">Sign Up</a>
+            </div>
+            <div class="mobile-profile-row" id="mobileProfileSection"
+              style="display:none; justify-content:center; align-items:center; gap:0.5rem; width:100%; margin-top:0.3rem;">
+              <div class="profile-wrapper" onclick="toggleProfileMenu(event)"
+                style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                <i class="fas fa-user-circle" style="font-size:1.7rem; color:#7b5e57;"></i>
+                <span id="mobileUserGreeting" style="font-size:0.88rem; font-weight:600; color:#3b2f2f;">Hi!</span>
+                <i class="fas fa-chevron-down" style="font-size:0.75rem; color:#7b5e57;"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <a href="cart.html" class="cart-icon" title="Cart">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+
+        <div class="nav-auth-btns" id="authButtons">
+          <a href="login2.html" class="btn-login">Login</a>
+          <a href="login2.html?mode=signup" class="btn-signup">Sign Up</a>
+        </div>
+
+        <div class="profile-wrapper" id="profileSection" style="display:none;">
+          <div class="profile-icon" onclick="toggleProfileMenu(event)" title="Account">
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile dropdown — shared by desktop & mobile -->
+  <div class="profile-menu" id="profileMenu">
+    <div class="user-greeting" id="userGreeting">Hi there!</div>
+    <a href="userdashboard.html"><i class="fas fa-user" style="margin-right:6px;font-size:0.85rem;"></i>My Profile</a>
+    <a href="userdashboard.html"><i class="fas fa-box" style="margin-right:6px;font-size:0.85rem;"></i>My Orders</a>
+    <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt" style="margin-right:6px;font-size:0.85rem;"></i>Logout</button>
+  </div>
+
+  <!-- ── Cart ── -->
+  <div class="cart-container"></div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="cart.js"></script>
+
+  <script>
+    /* ── Firebase auth ── */
+    firebase.initializeApp({
+      apiKey: "AIzaSyAYlz1zWNhr1DflppMfzNPva0UFVso7Bpk",
+      authDomain: "candle-d7f07.firebaseapp.com",
+      projectId: "candle-d7f07",
+      storageBucket: "candle-d7f07.appspot.com",
+      messagingSenderId: "165415078791",
+      appId: "1:165415078791:web:c764eb95f3d2272c1ce122"
+    });
+
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged(user => {
+      const authBtns   = document.getElementById('authButtons');
+      const profileSec = document.getElementById('profileSection');
+      const greeting   = document.getElementById('userGreeting');
+      const mobileAuthRow = document.getElementById('mobileAuthRow');
+      const mobileProfile = document.getElementById('mobileProfileSection');
+      if (user) {
+        authBtns.style.display   = 'none';
+        profileSec.style.display = 'flex';
+        const name = user.displayName || user.email || 'You';
+        greeting.textContent = 'Hi, ' + name.split(' ')[0] + '!';
+        if (mobileAuthRow) mobileAuthRow.style.display = 'none';
+        if (mobileProfile) mobileProfile.style.display = 'flex';
+        const mobileGreet = document.getElementById('mobileUserGreeting');
+        if (mobileGreet) mobileGreet.textContent = 'Hi, ' + name.split(' ')[0] + '!';
+      } else {
+        authBtns.style.display   = 'flex';
+        profileSec.style.display = 'none';
+        if (mobileAuthRow) mobileAuthRow.style.display = 'flex';
+        if (mobileProfile) mobileProfile.style.display = 'none';
+      }
+    });
+
+    function handleLogout() {
+      auth.signOut().then(() => { document.getElementById('profileMenu').style.display = 'none'; });
+    }
+
+    /* ── Profile dropdown ── */
+    function toggleProfileMenu(e) {
+      const menu = document.getElementById('profileMenu');
+      const isOpen = menu.style.display === 'flex';
+      if (isOpen) { menu.style.display = 'none'; return; }
+
+      menu.style.display = 'flex';
+      menu.style.visibility = 'hidden';
+      menu.style.position = 'fixed';
+
+      const anchor =
+        (e && (e.currentTarget || e.target)) ?
+          (e.currentTarget.closest('.profile-icon') || e.currentTarget.closest('.profile-wrapper') || e.target.closest('.profile-icon') || e.target.closest('.profile-wrapper')) :
+          document.querySelector('.profile-icon');
+
+      if (anchor) {
+        const r = anchor.getBoundingClientRect();
+        const top = r.bottom + 14;
+        const w = menu.offsetWidth || 180;
+        const left = Math.min(window.innerWidth - w - 12, Math.max(12, r.right - w));
+        menu.style.top = top + 'px';
+        menu.style.left = left + 'px';
+        menu.style.right = 'auto';
+      } else {
+        menu.style.top = '70px';
+        menu.style.right = '12px';
+        menu.style.left = 'auto';
+      }
+
+      menu.style.visibility = 'visible';
+    }
+    window.addEventListener('click', e => {
+      const pm = document.getElementById('profileMenu');
+      if (!pm) return;
+      if (!e.target.closest('.profile-wrapper') && !e.target.closest('#profileMenu')) {
+        pm.style.display = 'none';
+      }
+    });
+
+    /* ── Mobile nav toggle ── */
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('show'); }
+    window.addEventListener('click', e => {
+      const nl = document.getElementById('navLinks');
+      const mt = document.querySelector('.menu-toggle');
+      if (nl.classList.contains('show') && !nl.contains(e.target) && !mt.contains(e.target))
+        nl.classList.remove('show');
+    });
+    window.addEventListener('scroll', () => document.getElementById('navLinks').classList.remove('show'));
+  </script>
+</body>
+</html>

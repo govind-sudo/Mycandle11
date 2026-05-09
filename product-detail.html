@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lavender Calm — Glow & Scent</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root {
+  --primary: #7b5e57;
+  --accent: #5e443e;
+  --bg: #fffaf5;
+  --warm: #f5ede3;
+  --card: #fff;
+  --amber: #c98b4a;
+  --amber-light: #f0ba6a;
+  --text: #2a1f1a;
+  --muted: #8a7068;
+  --green: #5a9e72;
+  --glass: rgba(255,255,255,0.72);
+  --border: rgba(123,94,87,0.15);
+  --shadow: 0 8px 32px rgba(90,60,40,0.10);
+  --radius: 20px;
+  --radius-lg: 28px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── NOISE GRAIN ─── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:0; opacity:.6;
+}
+
+/* ─── BLOB BG ─── */
+.blob-bg {
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+}
+.blob {
+  position:absolute; border-radius:50%; filter:blur(80px); opacity:.35;
+}
+.blob-1 { width:600px;height:500px;background:radial-gradient(circle,#e8c49a,#d4956a); top:-150px;left:-100px; animation:blobMove1 18s ease-in-out infinite alternate; }
+.blob-2 { width:400px;height:400px;background:radial-gradient(circle,#c9a07a,#b8875a); bottom:-50px;right:-80px; animation:blobMove2 22s ease-in-out infinite alternate; }
+.blob-3 { width:300px;height:300px;background:radial-gradient(circle,#f0cfa0,#e0b07a); top:40%;left:50%; animation:blobMove3 16s ease-in-out infinite alternate; }
+@keyframes blobMove1 { to { transform:translate(80px,60px) scale(1.1); } }
+@keyframes blobMove2 { to { transform:translate(-60px,-40px) scale(1.08); } }
+@keyframes blobMove3 { to { transform:translate(-80px,50px) scale(.9); } }
+
+/* ─── NAV (matching moreproduct.html pill nav) ─── */
+nav {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,250,245,0.88);
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+  border-radius: 20px;
+  position: fixed;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  padding: 10px 30px;
+  width: min(1200px, calc(100vw - 24px));
+}
+.nav-container {
+  display:flex; align-items:center; gap:1.5rem;
+}
+.nav-center {
+  flex:1; display:flex; justify-content:center;
+}
+.nav-right {
+  display:flex; align-items:center; gap:.8rem; flex-shrink:0;
+}
+.mobile-actions, .mobile-auth-row { display:none; }
+.logo {
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem; font-weight:700; color:#3b2f2f; white-space:nowrap; flex-shrink:0;
+  text-decoration:none;
+}
+.menu-toggle {
+  font-size:1.8rem; cursor:pointer; display:none;
+  color:#3b2f2f; background:none; border:none; line-height:1; flex-shrink:0;
+}
+.nav-links { display:flex; gap:1.2rem; align-items:center; }
+.nav-links a {
+  color:#3b2f2f; text-decoration:none; font-weight:600; font-size:.95rem;
+  position:relative; transition:color .3s; white-space:nowrap;
+}
+.nav-links a::after {
+  content:""; position:absolute; width:0; height:2px; bottom:-4px; left:0;
+  background:var(--primary); transition:width .3s;
+}
+.nav-links a:hover::after { width:100%; }
+.nav-links a:hover { color:var(--primary); }
+.cart-icon::after, .btn-login::after, .btn-signup::after { display:none; }
+.nav-auth-btns { display:flex; align-items:center; gap:.6rem; flex-shrink:0; }
+.btn-login {
+  padding:.4rem 1.1rem; border:2px solid var(--primary);
+  background:transparent; color:var(--primary); border-radius:20px;
+  font-weight:700; font-size:.88rem; cursor:pointer; transition:all .25s; white-space:nowrap;
+  text-decoration:none;
+}
+.btn-login:hover,
+.btn-login:focus-visible {
+  background:var(--primary);
+  color:#fff !important;
+  border-color:var(--primary);
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(123,94,87,.22);
+  text-decoration:none;
+}
+.btn-signup {
+  padding:.4rem 1.1rem; border:2px solid var(--primary);
+  background:var(--primary); color:white !important; border-radius:20px;
+  font-weight:700; font-size:.88rem; cursor:pointer; transition:all .25s; white-space:nowrap;
+  text-decoration:none;
+}
+.btn-signup:hover { background:#5e443e; border-color:#5e443e; }
+.cart-icon {
+  display:flex; align-items:center; position:relative; color:#3b2f2f;
+  cursor:pointer; transition:transform .3s,color .3s; font-size:1.4rem; flex-shrink:0;
+  text-decoration:none;
+}
+.cart-icon:hover { transform:scale(1.1); color:var(--primary); }
+.cart-count {
+  position:absolute; top:-16px; right:-9px;
+  font-size:.8rem; font-weight:700; color:var(--accent);
+}
+
+/* ─── Profile dropdown (match index.html) ─── */
+.profile-wrapper { position:relative; display:flex; align-items:center; flex-shrink:0; }
+.profile-icon {
+  font-size:1.7rem; color:#3b2f2f; cursor:pointer;
+  transition:transform .3s,color .3s; line-height:1;
+}
+.profile-icon:hover { transform:scale(1.1); color:var(--primary); }
+.profile-menu .user-greeting{
+  padding:.75rem 1rem .5rem; font-size:.82rem;
+  color:#888; font-weight:600; border-bottom:1px solid #f0e8e4;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.profile-menu a, .profile-menu button{
+  display:block; width:100%; padding:.75rem 1rem;
+  color:#3b2f2f; font-weight:600; font-size:.92rem;
+  background:none; border:none; text-align:left; cursor:pointer;
+  transition:background .2s ease; text-decoration:none;
+}
+.profile-menu a::after, .profile-menu button::after { display:none; }
+.profile-menu a:hover, .profile-menu button:hover { background:#f5ede9; }
+.profile-menu .logout-btn { color:#c0392b; border-top:1px solid #f0e8e4; }
+
+#profileMenu{
+  display:none;
+  flex-direction:column;
+  position:absolute;
+  top:calc(100% + 14px);
+  right:0;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(0,0,0,0.14);
+  border-radius:12px;
+  overflow:hidden;
+  z-index:9999999;
+  min-width:180px;
+  animation:fadeInMenu .25s ease;
+}
+@media(max-width:768px){
+  nav { width:calc(100vw - 16px); padding:.6rem 1rem; border-radius:14px; top:8px; }
+  .nav-center { flex:0; }
+  .menu-toggle { display:block; margin-left:auto; transform:translateX(4px); }
+  .nav-right { display:none; }
+  .mobile-actions {
+    display:flex; flex-direction:column; justify-content:center; gap:.5rem;
+    margin-top:.5rem;
+  }
+  .mobile-auth-row {
+    display:flex; align-items:center; justify-content:center; gap:.6rem; width:100%;
+  }
+  .mobile-profile-row { display:none; }
+  .nav-links {
+    display:none; flex-direction:column; background:rgba(255,250,245,.97);
+    justify-content:flex-start;
+    backdrop-filter:blur(12px); position:absolute; top:calc(100% + 8px);
+    left:0; right:0; text-align:center; padding:1rem; border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12); z-index:999; gap:.8rem;
+  }
+  .nav-links.show { display:flex; }
+  .mobile-actions .cart-icon { margin:0 0 .2rem 0; }
+  .mobile-actions .cart-icon { width:100%; justify-content:center; }
+  .mobile-actions .btn-login,
+  .mobile-actions .btn-signup { padding:.35rem 1rem; }
+}
+
+/* ─── MAIN ─── */
+main {
+  position:relative; z-index:1;
+  padding: 100px 40px 80px;
+  max-width: 1280px; margin: 0 auto;
+}
+@media(max-width:900px){ main { padding:90px 20px 60px; } }
+
+/* ─── BREADCRUMB ─── */
+.breadcrumb {
+  display:flex; align-items:center; gap:8px;
+  font-size:.75rem; color:var(--muted);
+  font-weight:500; letter-spacing:.5px;
+  margin-bottom:36px;
+  opacity:0; animation:fadeUp .5s .1s forwards;
+}
+.breadcrumb a { color:var(--muted); text-decoration:none; transition:color .2s; }
+.breadcrumb a:hover { color:var(--primary); }
+.breadcrumb .sep { color:rgba(138,112,104,.35); }
+.breadcrumb .current { color:var(--primary); font-weight:600; }
+
+/* ─── PRODUCT GRID ─── */
+.product-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;
+}
+@media(max-width:900px){ .product-grid { grid-template-columns:1fr; gap:32px; } }
+
+/* ─── GALLERY ─── */
+.gallery { position:sticky; top:110px; }
+.main-img-wrap {
+  position:relative; border-radius:var(--radius-lg);
+  overflow:hidden; aspect-ratio:4/5;
+  background:linear-gradient(145deg,#f5e8d8,#ede0cc);
+  border:1.5px solid rgba(201,139,74,.2);
+  box-shadow:0 20px 60px rgba(90,60,40,.15);
+  opacity:0; animation:fadeUp .7s .15s forwards;
+  cursor:zoom-in;
+}
+.main-img-wrap::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(42,31,26,.12) 0%, transparent 50%);
+  pointer-events:none; z-index:1;
+}
+.main-img-wrap img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .6s cubic-bezier(.25,.1,.25,1);
+}
+.main-img-wrap:hover img { transform:scale(1.05); }
+
+/* floating badges */
+.badge-pill {
+  position:absolute; top:18px; left:18px; z-index:2;
+  background:var(--text); color:#fff;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:.9rem; letter-spacing:1.5px;
+  padding:6px 14px; border-radius:50px;
+}
+.badge-sale {
+  position:absolute; top:18px; right:18px; z-index:2;
+  background:var(--amber); color:#fff;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.7rem; font-weight:700; letter-spacing:1px;
+  padding:5px 12px; border-radius:50px;
+}
+.fav-btn {
+  position:absolute; bottom:18px; right:18px; z-index:2;
+  width:42px; height:42px; border-radius:50%;
+  background:rgba(255,255,255,.85); backdrop-filter:blur(10px);
+  border:1.5px solid rgba(201,139,74,.3);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all .25s;
+}
+.fav-btn:hover { background:#fff; border-color:var(--amber); transform:scale(1.1); }
+.fav-btn svg { width:18px; height:18px; fill:none; stroke:#8a7068; stroke-width:2; transition:all .25s; }
+.fav-btn.liked svg { fill:#e05252; stroke:#e05252; }
+
+.thumbnails {
+  display:flex; gap:10px; margin-top:14px;
+  opacity:0; animation:fadeUp .6s .3s forwards;
+}
+.thumb {
+  flex:1; aspect-ratio:1; border-radius:14px;
+  overflow:hidden; border:2px solid transparent;
+  cursor:pointer; transition:all .25s; background:#f0e4d4;
+}
+.thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.thumb.active { border-color:var(--amber); box-shadow:0 0 0 3px rgba(201,139,74,.2); }
+.thumb:hover:not(.active) { border-color:rgba(201,139,74,.4); }
+
+/* ─── INFO PANEL ─── */
+.product-info { display:flex; flex-direction:column; }
+
+.status-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(90,158,114,.12); border:1px solid rgba(90,158,114,.3);
+  border-radius:50px; padding:5px 14px; width:fit-content;
+  font-size:.72rem; font-weight:700; color:var(--green);
+  letter-spacing:1px; text-transform:uppercase;
+  margin-bottom:16px;
+  opacity:0; animation:fadeUp .5s .3s forwards;
+}
+.pulse { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+.product-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,5vw,3.6rem);
+  font-weight:700; line-height:1.05; color:var(--text);
+  margin-bottom:4px;
+  opacity:0; animation:fadeUp .6s .38s forwards;
+}
+.product-title em { color:var(--amber); font-style:italic; }
+
+.product-sub {
+  font-size:.88rem; color:var(--muted); font-weight:400;
+  margin-bottom:18px; letter-spacing:.3px;
+  opacity:0; animation:fadeUp .5s .43s forwards;
+}
+
+/* stars */
+.rating-row {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:22px;
+  opacity:0; animation:fadeUp .5s .48s forwards;
+}
+.stars span { color:var(--amber); font-size:.9rem; }
+.r-num { font-weight:700; font-size:.88rem; }
+.r-cnt { font-size:.8rem; color:var(--muted); }
+.r-link { font-size:.8rem; color:var(--primary); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+
+/* divider */
+.sep-line { height:1px; background:var(--border); margin:0 0 22px; opacity:0; animation:fadeUp .4s .5s forwards; }
+
+/* price */
+.price-row {
+  display:flex; align-items:flex-end; gap:14px;
+  margin-bottom:28px;
+  opacity:0; animation:fadeUp .5s .52s forwards;
+}
+.price-main {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3rem; line-height:1; color:var(--text); letter-spacing:1px;
+}
+.price-orig { font-size:1rem; color:var(--muted); text-decoration:line-through; margin-bottom:4px; }
+.price-save {
+  background:rgba(90,158,114,.12); border:1px solid rgba(90,158,114,.3);
+  color:var(--green); font-size:.7rem; font-weight:700;
+  padding:4px 10px; border-radius:50px; letter-spacing:.5px; margin-bottom:4px;
+}
+
+/* scent */
+.sec-label {
+  font-size:.68rem; font-weight:700; color:var(--muted);
+  letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;
+}
+.scent-sec { margin-bottom:22px; opacity:0; animation:fadeUp .5s .56s forwards; }
+.chips { display:flex; gap:8px; flex-wrap:wrap; }
+.chip {
+  padding:7px 16px; border-radius:50px;
+  font-size:.78rem; font-weight:600;
+  border:1.5px solid var(--border);
+  background:#fff; color:var(--muted);
+  cursor:pointer; transition:all .2s;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.chip.active {
+  background:var(--text); border-color:var(--text); color:#fff;
+  box-shadow:0 4px 16px rgba(42,31,26,.2);
+}
+.chip:hover:not(.active) { border-color:var(--primary); color:var(--primary); transform:translateY(-1px); }
+
+/* size */
+.size-sec { margin-bottom:26px; opacity:0; animation:fadeUp .5s .6s forwards; }
+.size-cards { display:flex; gap:10px; }
+.size-card {
+  flex:1; border-radius:16px; border:1.5px solid var(--border);
+  background:#fff; padding:14px 10px; text-align:center;
+  cursor:pointer; transition:all .22s;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.size-card.active {
+  border-color:var(--amber); background:rgba(201,139,74,.07);
+  box-shadow:0 4px 20px rgba(201,139,74,.18);
+}
+.size-card:hover:not(.active) { border-color:var(--primary); transform:translateY(-2px); }
+.sz-oz { font-family:'Bebas Neue',sans-serif; font-size:1.25rem; letter-spacing:1px; color:var(--text); }
+.sz-hrs { font-size:.68rem; color:var(--muted); margin-top:2px; }
+.sz-price { font-size:.8rem; font-weight:700; color:var(--amber); margin-top:6px; }
+
+/* actions */
+.action-row {
+  display:flex; gap:12px; align-items:center;
+  margin-bottom:14px;
+  opacity:0; animation:fadeUp .5s .64s forwards;
+}
+.qty-ctrl {
+  display:flex; align-items:center; border:1.5px solid var(--border);
+  border-radius:14px; overflow:hidden; background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.qty-btn {
+  width:44px; height:52px; background:none; border:none;
+  font-size:1.3rem; font-weight:700; color:var(--primary);
+  cursor:pointer; transition:background .2s;
+}
+.qty-btn:hover { background:rgba(123,94,87,.06); }
+.qty-num {
+  width:44px; height:52px;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:1rem; color:var(--text);
+  border-left:1px solid var(--border); border-right:1px solid var(--border);
+}
+.btn-cart {
+  flex:1; height:52px; border-radius:14px;
+  background:var(--text); border:none; color:#fff;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.9rem; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; cursor:pointer;
+  transition:all .25s; position:relative; overflow:hidden;
+  box-shadow:0 4px 20px rgba(42,31,26,.2);
+}
+.btn-cart::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 55%);
+  opacity:0; transition:opacity .25s;
+}
+.btn-cart:hover { background:var(--primary); transform:translateY(-2px); box-shadow:0 8px 30px rgba(123,94,87,.35); }
+.btn-cart:hover::before { opacity:1; }
+.btn-wishlist {
+  width:52px; height:52px; border-radius:14px;
+  border:1.5px solid var(--border); background:#fff;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all .25s; flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.btn-wishlist:hover { border-color:rgba(224,82,82,.4); background:rgba(224,82,82,.06); }
+.btn-wishlist svg { width:20px; height:20px; fill:none; stroke:var(--muted); stroke-width:2; transition:all .25s; }
+.btn-wishlist.liked svg { fill:#e05252; stroke:#e05252; }
+
+.btn-buynow {
+  width:100%; height:52px; border-radius:14px;
+  background:transparent; border:1.5px solid var(--primary);
+  color:var(--primary); font-family:'Space Grotesk',sans-serif;
+  font-size:.9rem; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; cursor:pointer; transition:all .25s;
+  margin-bottom:26px;
+  opacity:0; animation:fadeUp .5s .68s forwards;
+}
+.btn-buynow:hover { background:rgba(123,94,87,.07); transform:translateY(-2px); }
+
+/* perks */
+.perks {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  margin-bottom:28px;
+  opacity:0; animation:fadeUp .5s .72s forwards;
+}
+.perk {
+  display:flex; align-items:center; gap:10px;
+  background:#fff; border:1.5px solid var(--border);
+  border-radius:14px; padding:12px 14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+  transition:all .2s;
+}
+.perk:hover { border-color:rgba(201,139,74,.3); transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.07); }
+.perk-icon { font-size:1.2rem; flex-shrink:0; }
+.perk-label { font-size:.76rem; font-weight:700; color:var(--text); display:block; }
+.perk-sub { font-size:.7rem; color:var(--muted); }
+
+/* accordion */
+.acc-sec { opacity:0; animation:fadeUp .5s .76s forwards; }
+.acc-item { border-top:1px solid var(--border); }
+.acc-item:last-child { border-bottom:1px solid var(--border); }
+.acc-head {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:16px 0; cursor:pointer;
+  font-size:.88rem; font-weight:700; color:var(--text);
+  transition:color .2s; user-select:none;
+}
+.acc-head:hover { color:var(--primary); }
+.acc-icon { font-size:1.1rem; transition:transform .3s; color:var(--primary); font-weight:300; }
+.acc-head.open .acc-icon { transform:rotate(45deg); }
+.acc-body { max-height:0; overflow:hidden; transition:max-height .4s cubic-bezier(.4,0,.2,1); }
+.acc-body.open { max-height:280px; }
+.acc-inner { padding:0 0 16px; font-size:.82rem; color:var(--muted); line-height:1.8; }
+.acc-list { list-style:none; }
+.acc-list li { padding:3px 0; display:flex; align-items:center; gap:8px; }
+.acc-list li::before { content:'◆'; font-size:.4rem; color:var(--amber); flex-shrink:0; }
+
+/* ─── REVIEWS ─── */
+.reviews-sec {
+  margin-top:80px; padding-top:60px;
+  border-top:1px solid var(--border);
+  opacity:0; animation:fadeUp .6s .9s forwards;
+}
+.sec-heading {
+  font-family:'Playfair Display',serif;
+  font-size:2rem; font-weight:700; margin-bottom:6px;
+}
+.sec-heading em { color:var(--amber); font-style:italic; }
+.sec-sub { color:var(--muted); font-size:.88rem; margin-bottom:32px; }
+.reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+
+.review-card {
+  background:#fff; border:1.5px solid var(--border);
+  border-radius:var(--radius); padding:22px;
+  transition:all .3s; position:relative; overflow:hidden;
+  box-shadow:0 2px 16px rgba(0,0,0,.05);
+}
+.review-card::before {
+  content:'"'; position:absolute; top:6px; right:14px;
+  font-family:'Playfair Display',serif; font-size:5rem;
+  color:rgba(201,139,74,.1); line-height:1;
+}
+.review-card:hover { border-color:rgba(201,139,74,.3); transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.09); }
+.reviewer-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.avatar {
+  width:40px; height:40px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:.82rem; flex-shrink:0;
+  font-family:'Space Grotesk',sans-serif;
+}
+.r-name { font-weight:700; font-size:.84rem; color:var(--text); }
+.r-date { font-size:.7rem; color:var(--muted); }
+.r-stars { display:flex; gap:2px; margin-bottom:10px; }
+.r-stars span { color:var(--amber); font-size:.75rem; }
+.r-text { font-size:.82rem; color:var(--muted); line-height:1.7; }
+.r-tag {
+  display:inline-block; margin-top:12px;
+  background:rgba(123,94,87,.08); border:1px solid rgba(123,94,87,.2);
+  color:var(--primary); font-size:.67rem; font-weight:700;
+  letter-spacing:.5px; padding:3px 10px; border-radius:50px;
+}
+
+/* ─── RELATED ─── */
+.related-sec {
+  margin-top:80px;
+  opacity:0; animation:fadeUp .6s 1s forwards;
+}
+.related-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.rel-card {
+  border-radius:var(--radius); border:1.5px solid var(--border);
+  overflow:hidden; background:#fff; cursor:pointer;
+  transition:all .3s;
+  box-shadow:0 2px 16px rgba(0,0,0,.05);
+}
+.rel-card:hover { border-color:rgba(201,139,74,.3); transform:translateY(-6px); box-shadow:0 16px 50px rgba(0,0,0,.10); }
+.rel-img { aspect-ratio:1; overflow:hidden; position:relative; }
+.rel-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; display:block; }
+.rel-card:hover .rel-img img { transform:scale(1.08); }
+.rel-info { padding:14px; }
+.rel-name { font-weight:700; font-size:.88rem; color:var(--text); margin-bottom:3px; }
+.rel-desc { font-size:.74rem; color:var(--muted); margin-bottom:10px; }
+.rel-foot { display:flex; justify-content:space-between; align-items:center; }
+.rel-price { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:1px; color:var(--primary); }
+.rel-add {
+  width:32px; height:32px; border-radius:50%;
+  background:rgba(123,94,87,.1); border:1px solid rgba(123,94,87,.2);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--primary); font-size:1.1rem; transition:all .2s;
+}
+.rel-card:hover .rel-add { background:var(--text); color:#fff; border-color:var(--text); }
+
+/* ─── TOAST ─── */
+.toast {
+  position:fixed; bottom:28px; right:28px;
+  background:#fff; border:1.5px solid rgba(90,158,114,.3);
+  border-radius:18px; padding:14px 20px;
+  display:flex; align-items:center; gap:12px;
+  z-index:9999; box-shadow:0 8px 32px rgba(0,0,0,.12);
+  transform:translateY(120px); opacity:0;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+.toast-icon { font-size:1.3rem; }
+.toast-msg { font-weight:700; font-size:.84rem; color:var(--text); }
+.toast-sub { font-size:.72rem; color:var(--muted); }
+
+/* ─── ANIMS ─── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .gallery { position:static; }
+  .reviews-grid,.related-grid { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:560px){
+  .reviews-grid { grid-template-columns:1fr; }
+  .related-grid { grid-template-columns:1fr 1fr; }
+  .perks { grid-template-columns:1fr; }
+  .size-cards { gap:6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BG BLOBS -->
+<div class="blob-bg">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <a href="moreproduct.html" class="logo">Glow &amp; Scent</a>
+    <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('show')" aria-label="Toggle menu">&#9776;</button>
+    <div class="nav-center">
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="moreproduct.html">Products</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+        <div class="mobile-actions">
+          <a href="cart.html" class="cart-icon" title="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            </svg>
+          </a>
+          <div class="mobile-auth-row" id="mobileAuthRow">
+            <a href="login2.html" class="btn-login">Login</a>
+            <a href="login2.html?mode=signup" class="btn-signup">Sign Up</a>
+          </div>
+          <div class="mobile-profile-row" id="mobileProfileSection"
+            style="display:none; justify-content:center; align-items:center; gap:0.5rem; width:100%; margin-top:0.3rem;">
+            <div class="profile-wrapper" onclick="toggleProfileMenu(event)"
+              style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <i class="fas fa-user-circle" style="font-size:1.7rem; color:#7b5e57;"></i>
+              <span id="mobileUserGreeting" style="font-size:0.88rem; font-weight:600; color:#3b2f2f;">Hi!</span>
+              <i class="fas fa-chevron-down" style="font-size:0.75rem; color:#7b5e57;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="cart.html" class="cart-icon" title="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <div class="nav-auth-btns">
+        <a href="login2.html" class="btn-login">Login</a>
+        <a href="login2.html?mode=signup" class="btn-signup">Sign Up</a>
+      </div>
+      <div class="profile-wrapper" id="profileSection" style="display:none;">
+        <div class="profile-icon" onclick="toggleProfileMenu(event)" title="Account">
+          <i class="fas fa-user-circle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Profile dropdown — shared by desktop & mobile -->
+<div class="profile-menu" id="profileMenu">
+  <div class="user-greeting" id="userGreeting">Hi there!</div>
+  <a href="userdashboard.html"><i class="fas fa-user" style="margin-right:6px;font-size:0.85rem;"></i>My Profile</a>
+  <a href="cart.html"><i class="fas fa-shopping-cart" style="margin-right:6px;font-size:0.85rem;"></i>My Cart</a>
+  <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt" style="margin-right:6px;font-size:0.85rem;"></i>Logout</button>
+</div>
+
+<main>
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">/</span>
+    <a href="moreproduct.html">Products</a>
+    <span class="sep">/</span>
+    <span class="current" id="bcCurrent">Lavender Calm</span>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="product-grid">
+
+    <!-- GALLERY -->
+    <div class="gallery">
+      <div class="main-img-wrap">
+        <span class="badge-pill">✦ Bestseller</span>
+        <span class="badge-sale">25% OFF</span>
+        <div class="fav-btn" id="mainFav" onclick="this.classList.toggle('liked')">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <img id="mainImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHH6sTLinu_1-sIcGo7ZxxxXYsJyNxAy7KsA&s" alt="Lavender Calm Candle"/>
+      </div>
+      <div class="thumbnails">
+        <div class="thumb active" onclick="switchImg(this,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHH6sTLinu_1-sIcGo7ZxxxXYsJyNxAy7KsA&s')">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHH6sTLinu_1-sIcGo7ZxxxXYsJyNxAy7KsA&s"/>
+        </div>
+        <div class="thumb" onclick="switchImg(this,'https://media-us.landmarkshops.in/cdn-cgi/image/h=750,w=750,q=85,fit=cover/homecentre/1000013707308-1000013707307_03-2100.jpg')">
+          <img src="https://media-us.landmarkshops.in/cdn-cgi/image/h=750,w=750,q=85,fit=cover/homecentre/1000013707308-1000013707307_03-2100.jpg"/>
+        </div>
+        <div class="thumb" onclick="switchImg(this,'https://yankeecandle.imgix.net/facb0b62-21b0-3027-b1f4-fe5efef6f29e/facb0b62-21b0-3027-b1f4-fe5efef6f29e.jpg?fm=jpg')">
+          <img src="https://yankeecandle.imgix.net/facb0b62-21b0-3027-b1f4-fe5efef6f29e/facb0b62-21b0-3027-b1f4-fe5efef6f29e.jpg?fm=jpg"/>
+        </div>
+        <div class="thumb" onclick="switchImg(this,'https://igniquecandles.com/cdn/shop/files/crystal-jar-scented-jar-candle-3219621.jpg?v=1776452052&width=170')">
+          <img src="https://igniquecandles.com/cdn/shop/files/crystal-jar-scented-jar-candle-3219621.jpg?v=1776452052&width=170"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="product-info">
+      <div class="status-badge"><span class="pulse"></span> In Stock · Ships in 24h</div>
+
+      <h1 class="product-title" id="pTitle">Lavender <em>Calm</em></h1>
+      <p class="product-sub" id="pSub">Soy wax · Handpoured · Essential oils · Glass jar</p>
+
+      <div class="rating-row">
+        <div class="stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <span class="r-num">4.9</span>
+        <span class="r-cnt">(128 reviews)</span>
+        <span class="r-link">See all ↓</span>
+      </div>
+
+      <div class="sep-line"></div>
+
+      <div class="price-row" style="opacity:0;animation:fadeUp .5s .52s forwards;">
+        <div>
+          <div class="price-main" id="pPrice">₹599</div>
+        </div>
+        <div class="price-orig">₹799</div>
+        <div class="price-save">Save 25%</div>
+      </div>
+
+      <!-- Scent -->
+      <div class="scent-sec">
+        <div class="sec-label">Choose Scent</div>
+        <div class="chips">
+          <div class="chip active" onclick="selectChip(this)">🌿 Lavender</div>
+          <div class="chip" onclick="selectChip(this)">🍋 Citrus</div>
+          <div class="chip" onclick="selectChip(this)">🌹 Rose</div>
+          <div class="chip" onclick="selectChip(this)">🪵 Sandalwood</div>
+          <div class="chip" onclick="selectChip(this)">🍦 Vanilla</div>
+        </div>
+      </div>
+
+      <!-- Size -->
+      <div class="size-sec">
+        <div class="sec-label">Choose Size</div>
+        <div class="size-cards">
+          <div class="size-card" onclick="selectSize(this,'349')">
+            <div class="sz-oz">4 oz</div>
+            <div class="sz-hrs">~30 hrs</div>
+            <div class="sz-price">₹349</div>
+          </div>
+          <div class="size-card active" onclick="selectSize(this,'599')">
+            <div class="sz-oz">8 oz</div>
+            <div class="sz-hrs">~55 hrs</div>
+            <div class="sz-price">₹599</div>
+          </div>
+          <div class="size-card" onclick="selectSize(this,'899')">
+            <div class="sz-oz">12 oz</div>
+            <div class="sz-hrs">~80 hrs</div>
+            <div class="sz-price">₹899</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action row -->
+      <div class="action-row">
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <div class="qty-num" id="qtyNum">1</div>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+        <button class="btn-wishlist" id="wishBtn" onclick="this.classList.toggle('liked')">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+
+      <button class="btn-buynow">⚡ Buy It Now</button>
+
+      <!-- Perks -->
+      <div class="perks">
+        <div class="perk"><span class="perk-icon">🚚</span><div><span class="perk-label">Free Delivery</span><span class="perk-sub">Orders above ₹499</span></div></div>
+        <div class="perk"><span class="perk-icon">🌿</span><div><span class="perk-label">100% Natural</span><span class="perk-sub">Soy wax & oils</span></div></div>
+        <div class="perk"><span class="perk-icon">🎁</span><div><span class="perk-label">Gift Ready</span><span class="perk-sub">Premium packaging</span></div></div>
+        <div class="perk"><span class="perk-icon">↩️</span><div><span class="perk-label">Easy Returns</span><span class="perk-sub">7-day policy</span></div></div>
+      </div>
+
+      <!-- Accordion -->
+      <div class="acc-sec">
+        <div class="acc-item">
+          <div class="acc-head" onclick="toggleAcc(this)">Product Details <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <div class="acc-inner">
+              <ul class="acc-list">
+                <li>100% natural soy wax — no paraffin, no toxins</li>
+                <li>Pure lavender + vanilla essential oil blend</li>
+                <li>Hand-poured in small batches in India 🇮🇳</li>
+                <li>Lead-free cotton wick for a clean, even burn</li>
+                <li>Reusable glass jar — great for storage after use</li>
+                <li>Burn time: approx. 55 hours (8 oz)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head" onclick="toggleAcc(this)">How to Use <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <div class="acc-inner">Trim wick to 5mm before each burn. Allow wax to melt to the edges on first use (2–3 hrs) to prevent tunneling. Never leave burning unattended. Store in a cool, dry place away from sunlight.</div>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-head" onclick="toggleAcc(this)">Shipping & Returns <span class="acc-icon">+</span></div>
+          <div class="acc-body">
+            <div class="acc-inner">
+              <ul class="acc-list">
+                <li>Ships within 24 hours of ordering</li>
+                <li>Delivery in 3–5 business days across India</li>
+                <li>Free shipping on orders above ₹499</li>
+                <li>Easy 7-day returns if product is damaged</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews -->
+  <div class="reviews-sec">
+    <h2 class="sec-heading">What people <em>say</em></h2>
+    <p class="sec-sub">Real reviews from real candle lovers ✦</p>
+    <div class="reviews-grid" id="reviewsGrid">
+      <div class="review-card">
+        <div class="reviewer-row">
+          <div class="avatar" style="background:linear-gradient(135deg,#e8c49a,#c98b4a);color:#fff;">PR</div>
+          <div><div class="r-name">Priya R.</div><div class="r-date">March 2025</div></div>
+        </div>
+        <div class="r-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="r-text">Absolutely love the scent! Makes my room smell like a spa. Already ordered three times and gifted to friends.</p>
+        <span class="r-tag">Lavender Calm · 8oz</span>
+      </div>
+      <div class="review-card">
+        <div class="reviewer-row">
+          <div class="avatar" style="background:linear-gradient(135deg,#6fcf97,#1e7a4a);color:#fff;">AK</div>
+          <div><div class="r-name">Ayesha K.</div><div class="r-date">Feb 2025</div></div>
+        </div>
+        <div class="r-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="r-text">Incredible quality and packaging. Looked so premium — couldn't believe the price. Will definitely reorder!</p>
+        <span class="r-tag">Lavender Calm · 12oz</span>
+      </div>
+      <div class="review-card">
+        <div class="reviewer-row">
+          <div class="avatar" style="background:linear-gradient(135deg,#a78bfa,#6d28d9);color:#fff;">NT</div>
+          <div><div class="r-name">Neeraj T.</div><div class="r-date">Jan 2025</div></div>
+        </div>
+        <div class="r-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="r-text">The calming lavender is perfect for winding down at night. Instant cozy vibes, burns so cleanly!</p>
+        <span class="r-tag">Lavender Calm · 8oz</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related -->
+  <div class="related-sec">
+    <h2 class="sec-heading" style="margin-bottom:6px">You might also <em>love</em></h2>
+    <p class="sec-sub" style="margin-bottom:26px">Hand-picked for you ✦</p>
+    <div class="related-grid" id="relatedGrid">
+      <div class="rel-card" onclick="openProduct('Citrus Sunrise','Fresh & energizing · Lemon + Orange','₹549','https://media-us.landmarkshops.in/cdn-cgi/image/h=750,w=750,q=85,fit=cover/homecentre/1000013707308-1000013707307_03-2100.jpg')">
+        <div class="rel-img"><img src="https://media-us.landmarkshops.in/cdn-cgi/image/h=750,w=750,q=85,fit=cover/homecentre/1000013707308-1000013707307_03-2100.jpg" alt="Citrus Sunrise"/></div>
+        <div class="rel-info">
+          <div class="rel-name">Citrus Sunrise</div>
+          <div class="rel-desc">Fresh & energizing · Lemon + Orange</div>
+          <div class="rel-foot"><span class="rel-price">₹549</span><div class="rel-add">+</div></div>
+        </div>
+      </div>
+      <div class="rel-card" onclick="openProduct('Forest Flame','Woody · Cedar + Musk · Wood wick','₹599','https://yankeecandle.imgix.net/facb0b62-21b0-3027-b1f4-fe5efef6f29e/facb0b62-21b0-3027-b1f4-fe5efef6f29e.jpg?fm=jpg')">
+        <div class="rel-img"><img src="https://yankeecandle.imgix.net/facb0b62-21b0-3027-b1f4-fe5efef6f29e/facb0b62-21b0-3027-b1f4-fe5efef6f29e.jpg?fm=jpg" alt="Forest Flame"/></div>
+        <div class="rel-info">
+          <div class="rel-name">Forest Flame</div>
+          <div class="rel-desc">Woody · Cedar + Musk · Wood wick</div>
+          <div class="rel-foot"><span class="rel-price">₹599</span><div class="rel-add">+</div></div>
+        </div>
+      </div>
+      <div class="rel-card" onclick="openProduct('Rose Bliss','Romantic rose fragrance · Gift-ready','₹699','https://m.media-amazon.com/images/I/81rAqfn1HoL._AC_SL1500_.jpg')">
+        <div class="rel-img"><img src="https://m.media-amazon.com/images/I/81rAqfn1HoL._AC_SL1500_.jpg" alt="Rose Bliss"/></div>
+        <div class="rel-info">
+          <div class="rel-name">Rose Bliss</div>
+          <div class="rel-desc">Romantic rose fragrance · Gift-ready</div>
+          <div class="rel-foot"><span class="rel-price">₹699</span><div class="rel-add">+</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">🛍️</span>
+  <div>
+    <div class="toast-msg" id="toastMsg">Added to cart!</div>
+    <div class="toast-sub" id="toastSub">Lavender Calm · 8oz</div>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+/* ─── Firebase Auth (match index.html behavior) ─── */
+firebase.initializeApp({
+  apiKey: "AIzaSyAYlz1zWNhr1DflppMfzNPva0UFVso7Bpk",
+  authDomain: "candle-d7f07.firebaseapp.com",
+  projectId: "candle-d7f07",
+  storageBucket: "candle-d7f07.appspot.com",
+  messagingSenderId: "165415078791",
+  appId: "1:165415078791:web:c764eb95f3d2272c1ce122"
+});
+
+const auth = firebase.auth();
+
+auth.onAuthStateChanged(user => {
+  const authButtons = document.querySelector('.nav-right .nav-auth-btns');
+  const profileSection = document.getElementById('profileSection');
+  const userGreeting = document.getElementById('userGreeting');
+  const mobileAuthRow = document.getElementById('mobileAuthRow');
+  const mobileProfileSection = document.getElementById('mobileProfileSection');
+  const mobileUserGreeting = document.getElementById('mobileUserGreeting');
+
+  if (user) {
+    const name = user.displayName || user.email || 'You';
+    const firstName = name.split(' ')[0];
+    if (authButtons) authButtons.style.display = 'none';
+    if (profileSection) profileSection.style.display = 'flex';
+    if (userGreeting) userGreeting.textContent = 'Hi, ' + firstName + '!';
+    if (mobileAuthRow) mobileAuthRow.style.display = 'none';
+    if (mobileProfileSection) mobileProfileSection.style.display = 'flex';
+    if (mobileUserGreeting) mobileUserGreeting.textContent = 'Hi, ' + firstName + '!';
+  } else {
+    if (authButtons) authButtons.style.display = 'flex';
+    if (profileSection) profileSection.style.display = 'none';
+    if (mobileAuthRow) mobileAuthRow.style.display = 'flex';
+    if (mobileProfileSection) mobileProfileSection.style.display = 'none';
+  }
+});
+
+function handleLogout() {
+  auth.signOut().then(() => {
+    const pm = document.getElementById('profileMenu');
+    if (pm) pm.style.display = 'none';
+  });
+}
+
+function toggleProfileMenu(e) {
+  const menu = document.getElementById('profileMenu');
+  if (!menu) return;
+  const isOpen = menu.style.display === 'flex';
+  if (isOpen) { menu.style.display = 'none'; return; }
+
+  menu.style.display = 'flex';
+  menu.style.visibility = 'hidden';
+  menu.style.position = 'fixed';
+
+  const anchor =
+    (e && (e.currentTarget || e.target)) ?
+      (e.currentTarget.closest('.profile-icon') || e.currentTarget.closest('.profile-wrapper') || e.target.closest('.profile-icon') || e.target.closest('.profile-wrapper')) :
+      document.querySelector('.profile-icon');
+
+  if (anchor) {
+    const r = anchor.getBoundingClientRect();
+    const top = r.bottom + 14;
+    const w = menu.offsetWidth || 180;
+    const left = Math.min(window.innerWidth - w - 12, Math.max(12, r.right - w));
+    menu.style.top = top + 'px';
+    menu.style.left = left + 'px';
+    menu.style.right = 'auto';
+  } else {
+    menu.style.top = '70px';
+    menu.style.right = '12px';
+    menu.style.left = 'auto';
+  }
+
+  menu.style.visibility = 'visible';
+}
+
+window.addEventListener('click', e => {
+  const pm = document.getElementById('profileMenu');
+  if (!pm) return;
+  if (!e.target.closest('.profile-wrapper') && !e.target.closest('#profileMenu')) {
+    pm.style.display = 'none';
+  }
+});
+
+/* ─── Product data with per-product reviews ─── */
+const PRODUCTS = {
+  "Rose Bliss": {
+    img: "https://m.media-amazon.com/images/I/81rAqfn1HoL._AC_SL1500_.jpg",
+    sub: "Rose · Handpoured · Essential oils · Glass jar",
+    price: "699",
+    rating: "4.8",
+    reviews: [
+      { name: "Sana M.", date: "March 2026", text: "Soft floral fragrance feels luxurious and romantic. I use it during dinner dates at home.", size: "8oz", avatar: "SM", avatarBg: "linear-gradient(135deg,#e89bb0,#c45a7e)" },
+      { name: "Ritika J.", date: "Feb 2026", text: "Perfect gift candle. The rose scent is elegant, not overpowering, and burn quality is excellent.", size: "12oz", avatar: "RJ", avatarBg: "linear-gradient(135deg,#f2c4d6,#d480a1)" },
+      { name: "Karan P.", date: "Jan 2026", text: "Looks premium on my coffee table and the fragrance spreads fast in a medium room.", size: "8oz", avatar: "KP", avatarBg: "linear-gradient(135deg,#f2b8a0,#d17b5b)" }
+    ]
+  },
+  "Lavender Calm": {
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHH6sTLinu_1-sIcGo7ZxxxXYsJyNxAy7KsA&s",
+    sub: "Soy wax · Handpoured · Essential oils · Glass jar",
+    price: "599",
+    rating: "4.9",
+    reviews: [
+      { name: "Priya R.", date: "March 2025", text: "Absolutely love the scent! Makes my room smell like a spa. Already ordered three times and gifted to friends.", size: "8oz", avatar: "PR", avatarBg: "linear-gradient(135deg,#e8c49a,#c98b4a)" },
+      { name: "Ayesha K.", date: "Feb 2025", text: "Incredible quality and packaging. Looked so premium - couldn't believe the price. Will definitely reorder!", size: "12oz", avatar: "AK", avatarBg: "linear-gradient(135deg,#6fcf97,#1e7a4a)" },
+      { name: "Neeraj T.", date: "Jan 2025", text: "The calming lavender is perfect for winding down at night. Instant cozy vibes, burns so cleanly!", size: "8oz", avatar: "NT", avatarBg: "linear-gradient(135deg,#a78bfa,#6d28d9)" }
+    ]
+  },
+  "Citrus Sunrise": {
+    img: "https://media-us.landmarkshops.in/cdn-cgi/image/h=750,w=750,q=85,fit=cover/homecentre/1000013707308-1000013707307_03-2100.jpg",
+    sub: "Soy wax · Handpoured · Citrus oils · Glass jar",
+    price: "549",
+    rating: "4.7",
+    reviews: [
+      { name: "Mehul S.", date: "April 2026", text: "Super fresh scent for mornings. The lemon-orange blend really lifts the mood.", size: "8oz", avatar: "MS", avatarBg: "linear-gradient(135deg,#ffd36e,#ff9f1a)" },
+      { name: "Isha D.", date: "March 2026", text: "Burns evenly and makes my workspace feel bright. Great value for the quality.", size: "8oz", avatar: "ID", avatarBg: "linear-gradient(135deg,#ffb347,#ffcc33)" },
+      { name: "Rahul V.", date: "Feb 2026", text: "Perfect daytime candle with clean citrus notes and no smoky smell.", size: "12oz", avatar: "RV", avatarBg: "linear-gradient(135deg,#ffc66d,#f97316)" }
+    ]
+  },
+  "Forest Flame": {
+    img: "https://yankeecandle.imgix.net/facb0b62-21b0-3027-b1f4-fe5efef6f29e/facb0b62-21b0-3027-b1f4-fe5efef6f29e.jpg?fm=jpg",
+    sub: "Soy wax · Wood wick · Woody scent · Glass jar",
+    price: "599",
+    rating: "4.8",
+    reviews: [
+      { name: "Aman L.", date: "April 2026", text: "The wood wick crackle is amazing. Feels like a tiny campfire in my room.", size: "8oz", avatar: "AL", avatarBg: "linear-gradient(135deg,#8b6f47,#5a3e2b)" },
+      { name: "Deepa N.", date: "March 2026", text: "Warm woody notes are balanced and relaxing. One of my favorite evening candles.", size: "12oz", avatar: "DN", avatarBg: "linear-gradient(135deg,#9a7b4f,#6a4b2f)" },
+      { name: "Vivek C.", date: "Feb 2026", text: "Strong throw and great burn time. Works great in the living room.", size: "8oz", avatar: "VC", avatarBg: "linear-gradient(135deg,#7c5f3f,#4b3527)" }
+    ]
+  },
+  "Morning Brew": {
+    img: "https://m.media-amazon.com/images/I/81XVRRkz8wL._AC_SL1500_.jpg",
+    sub: "Soy wax · Handpoured · Coffee + Caramel · Jar",
+    price: "499",
+    rating: "4.6",
+    reviews: [
+      { name: "Nidhi G.", date: "April 2026", text: "Smells exactly like a cafe. Coffee and caramel notes are delicious.", size: "8oz", avatar: "NG", avatarBg: "linear-gradient(135deg,#b7794f,#7b4a2f)" },
+      { name: "Punit A.", date: "March 2026", text: "I light this while working and it feels cozy without being too sweet.", size: "8oz", avatar: "PA", avatarBg: "linear-gradient(135deg,#a1623b,#6b3f27)" },
+      { name: "Rhea K.", date: "Feb 2026", text: "Great quality and throw for the price. My kitchen smells amazing.", size: "12oz", avatar: "RK", avatarBg: "linear-gradient(135deg,#c08457,#8b5a3c)" }
+    ]
+  },
+  "Vanilla Dream": {
+    img: "https://m.media-amazon.com/images/I/71gbyDNHhZL._AC_SL1500_.jpg",
+    sub: "Soy wax · Handpoured · Vanilla · Glass jar",
+    price: "599",
+    rating: "4.8",
+    reviews: [
+      { name: "Komal T.", date: "April 2026", text: "Creamy vanilla scent is cozy and comforting. Perfect for bedtime.", size: "8oz", avatar: "KT", avatarBg: "linear-gradient(135deg,#f5d7a1,#d8a864)" },
+      { name: "Yash S.", date: "March 2026", text: "Not synthetic at all, just warm and smooth vanilla. Love it.", size: "12oz", avatar: "YS", avatarBg: "linear-gradient(135deg,#f2c078,#bf8c4a)" },
+      { name: "Sneha P.", date: "Feb 2026", text: "Long burn time and beautiful jar design. Great for gifting.", size: "8oz", avatar: "SP", avatarBg: "linear-gradient(135deg,#eec184,#c6924f)" }
+    ]
+  }
+};
+
+const PRODUCT_NAMES = Object.keys(PRODUCTS);
+
+/* ─── Read URL param on load ─── */
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('product');
+  loadProduct(name && PRODUCTS[name] ? name : "Lavender Calm");
+})();
+
+function loadProduct(name){
+  const p = PRODUCTS[name];
+  document.title = name + " — Glow & Scent";
+  document.getElementById("bcCurrent").textContent = name;
+  document.getElementById("pTitle").innerHTML = name.replace(/(\w+)$/, "<em>$1</em>");
+  document.getElementById("pSub").textContent = p.sub;
+  document.getElementById("pPrice").textContent = "₹" + p.price;
+  document.getElementById("mainImage").src = p.img;
+
+  const firstThumb = document.querySelector(".thumb img");
+  if (firstThumb) {
+    firstThumb.src = p.img;
+    firstThumb.parentElement.onclick = function () { switchImg(firstThumb.parentElement, p.img); };
+  }
+
+  const ratingNum = document.querySelector(".r-num");
+  const ratingCnt = document.querySelector(".r-cnt");
+  if (ratingNum) ratingNum.textContent = p.rating;
+  if (ratingCnt) ratingCnt.textContent = "(" + p.reviews.length + " reviews)";
+
+  renderReviews(name);
+  renderRelated(name);
+}
+
+function renderReviews(name){
+  const grid = document.getElementById("reviewsGrid");
+  const current = PRODUCTS[name];
+  if (!grid || !current) return;
+
+  grid.innerHTML = current.reviews.map(function(review){
+    return `
+      <div class="review-card">
+        <div class="reviewer-row">
+          <div class="avatar" style="background:${review.avatarBg};color:#fff;">${review.avatar}</div>
+          <div><div class="r-name">${review.name}</div><div class="r-date">${review.date}</div></div>
+        </div>
+        <div class="r-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="r-text">${review.text}</p>
+        <span class="r-tag">${name} · ${review.size}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderRelated(name){
+  const grid = document.getElementById("relatedGrid");
+  if (!grid) return;
+
+  const relatedNames = PRODUCT_NAMES.filter(function(productName){
+    return productName !== name;
+  }).slice(0, 3);
+
+  grid.innerHTML = relatedNames.map(function(productName){
+    const p = PRODUCTS[productName];
+    return `
+      <div class="rel-card" onclick="openProduct('${productName.replace(/'/g, "\\'")}')">
+        <div class="rel-img"><img src="${p.img}" alt="${productName}"/></div>
+        <div class="rel-info">
+          <div class="rel-name">${productName}</div>
+          <div class="rel-desc">${p.sub}</div>
+          <div class="rel-foot"><span class="rel-price">₹${p.price}</span><div class="rel-add">+</div></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+/* ─── Related card click ─── */
+function openProduct(name){
+  window.location.href = "product-detail.html?product=" + encodeURIComponent(name);
+}
+
+/* ─── Qty ─── */
+let qty = 1;
+function changeQty(d){
+  qty = Math.max(1, qty + d);
+  document.getElementById('qtyNum').textContent = qty;
+}
+
+/* ─── Cart ─── */
+let cartCount = 0;
+function addToCart(){
+  cartCount += qty;
+  document.getElementById('cartCount').textContent = cartCount;
+  const name = document.getElementById('pTitle').textContent;
+  document.getElementById('toastMsg').textContent = 'Added to cart!';
+  document.getElementById('toastSub').textContent = name + ' · ' + document.querySelector('.size-card.active .sz-oz').textContent;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+/* ─── Image switch ─── */
+function switchImg(thumb, src){
+  document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));
+  thumb.classList.add('active');
+  const img = document.getElementById('mainImage');
+  img.style.opacity='0'; img.style.transform='scale(.97)';
+  setTimeout(()=>{
+    img.src=src;
+    img.style.transition='opacity .35s,transform .35s';
+    img.style.opacity='1'; img.style.transform='scale(1)';
+  },180);
+}
+
+/* ─── Scent chip ─── */
+function selectChip(el){
+  el.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ─── Size card ─── */
+function selectSize(card, price){
+  card.closest('.size-cards').querySelectorAll('.size-card').forEach(c=>c.classList.remove('active'));
+  card.classList.add('active');
+  document.getElementById('pPrice').textContent = '₹' + price;
+}
+
+/* ─── Accordion ─── */
+function toggleAcc(head){
+  const body = head.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.acc-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.acc-head').forEach(h=>h.classList.remove('open'));
+  if(!isOpen){ body.classList.add('open'); head.classList.add('open'); }
+}
+</script>
+</body>
+</html>
