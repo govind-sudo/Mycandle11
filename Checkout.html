@@ -39,7 +39,6 @@
       pointer-events: none; opacity: 0.4;
     }
 
-    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -53,7 +52,6 @@
     .nav-back { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-back:hover { color: var(--brown); }
 
-    /* PROGRESS */
     .progress-wrap { background: white; border-bottom: 1px solid var(--border); padding: 0.85rem 1rem; }
     .progress-inner { max-width: 560px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 0; }
     .step { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 500; color: #c0afa6; }
@@ -65,16 +63,13 @@
     .step-line { flex: 0 0 48px; height: 1.5px; background: #e5ddd8; margin: 0 4px; }
     .step-line.done { background: #3d9e60; }
 
-    /* LAYOUT */
     .checkout-layout { max-width: 960px; margin: 2.4rem auto; padding: 0 1.2rem; display: grid; grid-template-columns: 1fr 360px; gap: 1.8rem; position: relative; z-index: 1; }
     @media (max-width: 780px) { .checkout-layout { grid-template-columns: 1fr; } }
 
-    /* CARD */
     .card { background: white; border: 1px solid var(--border); border-radius: var(--r); padding: 2rem; box-shadow: var(--shadow-sm); margin-bottom: 1.4rem; }
     .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--dark); margin-bottom: 1.6rem; display: flex; align-items: center; gap: 10px; }
     .card-title i { width: 34px; height: 34px; background: var(--warm); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; color: var(--brown); }
 
-    /* FORM */
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
     .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.1rem; }
@@ -88,7 +83,6 @@
     .divider { display: flex; align-items: center; gap: 10px; margin: 0.4rem 0 1.2rem; color: var(--muted); font-size: 0.75rem; }
     .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* SUMMARY */
     .summary-item { display: flex; align-items: center; gap: 12px; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
     .summary-item:last-child { border-bottom: none; }
     .item-img { width: 54px; height: 54px; border-radius: 10px; object-fit: cover; background: var(--warm); border: 1px solid var(--border); }
@@ -104,7 +98,6 @@
     .badge { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--muted); background: var(--warm); padding: 4px 10px; border-radius: 20px; }
     .badge i { color: var(--gold); font-size: 0.7rem; }
 
-    /* BUTTONS */
     .place-order-btn { width: 100%; padding: 1rem 1.5rem; background: var(--brown); color: white; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 16px rgba(107,76,59,0.25); }
     .place-order-btn:hover:not(:disabled) { background: var(--dark); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(107,76,59,0.3); }
     .place-order-btn:active:not(:disabled) { transform: translateY(0); }
@@ -114,14 +107,12 @@
     .place-order-btn.loading .btn-text { opacity: 0.7; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── PAYMENT MODAL ── */
     .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(20,10,5,0.65); backdrop-filter: blur(5px); z-index: 5000; align-items: center; justify-content: center; padding: 1rem; }
     .modal-backdrop.open { display: flex; animation: fadeIn 0.25s ease; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .modal { background: white; border-radius: 20px; max-width: 460px; width: 100%; padding: 2rem; text-align: center; box-shadow: var(--shadow-lg); animation: slideUp 0.3s ease; }
     @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-    /* Payment steps inside modal */
     .pay-step { transition: all 0.3s ease; }
     .pay-step.hidden { display: none; }
 
@@ -131,7 +122,6 @@
     .order-id-badge { display: inline-block; background: var(--warm); border: 1px solid var(--border); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--brown); margin-bottom: 1.2rem; }
     .modal-amount { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--brown); margin: 0.8rem 0 1.2rem; }
 
-    /* Pay Now button */
     .pay-now-btn { width: 100%; padding: 1rem 1.5rem; background: linear-gradient(135deg, #2d7d46, #3d9e60); color: white; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; box-shadow: 0 4px 16px rgba(45,125,70,0.3); margin-bottom: 0.75rem; letter-spacing: 0.02em; }
     .pay-now-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(45,125,70,0.4); }
     .pay-now-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
@@ -139,10 +129,8 @@
     .cancel-btn { width: 100%; padding: 0.75rem; background: transparent; color: var(--muted); border: 1.5px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
     .cancel-btn:hover { border-color: var(--brown); color: var(--brown); }
 
-    /* Verifying step */
     .verify-spinner { width: 56px; height: 56px; border: 4px solid var(--warm); border-top-color: var(--brown); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 1.5rem auto; }
 
-    /* Success step */
     .success-icon { width: 70px; height: 70px; border-radius: 50%; background: #eafaf1; border: 2px solid #27ae60; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
     @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
@@ -152,35 +140,28 @@
     .done-btn { width: 100%; padding: 0.85rem; background: var(--warm); color: var(--dark); border: 1.5px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
     .done-btn:hover { background: #ede4d9; }
 
-    /* Cashfree badge */
     .cf-badge { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.72rem; color: var(--muted); margin-top: 0.8rem; }
-    .cf-badge img { height: 16px; opacity: 0.5; }
 
-    /* TOAST */
     .toast { position: fixed; bottom: 1.8rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--dark); color: white; padding: 0.7rem 1.6rem; border-radius: 30px; font-size: 0.85rem; font-weight: 500; z-index: 9999; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); white-space: nowrap; display: flex; align-items: center; gap: 8px; }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .toast.error { background: #c0392b; }
     .toast.success { background: #27ae60; }
 
-    /* Payment failed */
     .fail-icon { width: 70px; height: 70px; border-radius: 50%; background: #fdf0f0; border: 2px solid #e74c3c; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; }
     .retry-btn { width: 100%; padding: 0.9rem; background: var(--brown); color: white; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; margin-bottom: 0.75rem; transition: all 0.2s; }
     .retry-btn:hover { background: var(--dark); }
 
-    /* Info box */
     .info-box { background: #f0f7ff; border: 1px solid #bee3f8; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.78rem; color: #2b6cb0; margin-bottom: 1rem; text-align: left; display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
     .info-box i { margin-top: 2px; flex-shrink: 0; }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <div class="logo">Glow <span>&amp;</span> Scent</div>
     <a href="cart.html" class="nav-back"><i class="fas fa-arrow-left" style="font-size:0.75rem;"></i> Back to Cart</a>
   </nav>
 
-  <!-- PROGRESS -->
   <div class="progress-wrap">
     <div class="progress-inner">
       <div class="step done">
@@ -200,9 +181,7 @@
     </div>
   </div>
 
-  <!-- MAIN LAYOUT -->
   <div class="checkout-layout">
-    <!-- LEFT: FORM -->
     <div>
       <div class="card">
         <div class="card-title"><i class="fas fa-map-marker-alt"></i> Delivery Details</div>
@@ -247,7 +226,6 @@
       </div>
     </div>
 
-    <!-- RIGHT: SUMMARY -->
     <div>
       <div class="card">
         <div class="card-title"><i class="fas fa-shopping-bag"></i> Order Summary</div>
@@ -279,37 +257,31 @@
     </div>
   </div>
 
-  <!-- ═══ PAYMENT MODAL ═══ -->
+  <!-- PAYMENT MODAL -->
   <div class="modal-backdrop" id="paymentModal">
     <div class="modal">
 
-      <!-- STEP 1: Ready to Pay -->
       <div class="pay-step" id="step-ready">
         <div class="modal-icon"><i class="fas fa-credit-card"></i></div>
         <h2>Complete Payment</h2>
         <p class="modal-subtitle">You'll be taken to Cashfree's secure payment page</p>
         <div class="order-id-badge" id="modalOrderId">Order #—</div>
-
         <div class="modal-amount" id="modalAmount">₹0.00</div>
-
         <div class="info-box">
           <i class="fas fa-info-circle"></i>
           <span>Pay securely via UPI, Cards, Net Banking or Wallets. Your order is confirmed <strong>only after successful payment</strong>.</span>
         </div>
-
         <button class="pay-now-btn" id="payNowBtn" onclick="launchCashfree()">
           <i class="fas fa-lock" style="font-size:0.85rem;"></i>
           Pay Now Securely
         </button>
         <button class="cancel-btn" onclick="closeModal()">← Go Back</button>
-
         <div class="cf-badge">
           <i class="fas fa-shield-alt" style="color:#27ae60;"></i>
           Secured by Cashfree Payments
         </div>
       </div>
 
-      <!-- STEP 2: Verifying -->
       <div class="pay-step hidden" id="step-verifying">
         <div class="modal-icon" style="background:#eafaf1;"><i class="fas fa-sync-alt" style="color:#27ae60;"></i></div>
         <h2>Verifying Payment</h2>
@@ -318,14 +290,12 @@
         <p style="font-size:0.8rem; color:var(--muted);">Do not close or refresh this page</p>
       </div>
 
-      <!-- STEP 3: Payment Success -->
       <div class="pay-step hidden" id="step-success">
         <div class="success-icon">✅</div>
         <h2 style="color:#27ae60;">Payment Successful!</h2>
         <p class="modal-subtitle">Your order has been placed. Notify us on WhatsApp to confirm dispatch.</p>
         <div class="order-id-badge" id="successOrderId">Order #—</div>
         <div class="modal-amount" id="successAmount">₹0.00</div>
-
         <a class="wa-btn" id="waConfirmBtn" href="#" target="_blank">
           <i class="fab fa-whatsapp" style="font-size:1.1rem;"></i>
           Confirm Order on WhatsApp
@@ -336,7 +306,6 @@
         </button>
       </div>
 
-      <!-- STEP 4: Payment Failed -->
       <div class="pay-step hidden" id="step-failed">
         <div class="fail-icon">❌</div>
         <h2 style="color:#e74c3c;">Payment Failed</h2>
@@ -352,21 +321,17 @@
 
   <div class="toast" id="toast"></div>
 
-  <!-- Cashfree JS SDK (TEST environment) -->
   <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
   <script>
-    /* ═══════════════════════════════════════════════════════
-       ▸ CONFIG — edit these values
-    ═══════════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════════════
+       CONFIG — only safe public values here
+       Secret key is now safely stored in Vercel backend
+    ══════════════════════════════════════════════════ */
     const CF_APP_ID     = '12747465593aee0f27c4eeca7376474721'; 
     const CF_SECRET_KEY = 'cfsk_ma_prod_eb63eac6b3630deb35018679a438d3ca_5dd0121a'; 
     const WHATSAPP_NO    = '919691207673'; // Merchant's WhatsApp (with country code, no +)
     const CF_ENV        = 'production';     // Change to 'production' when going live
-
-    // ⚠️ IMPORTANT: In production, move CF_SECRET_KEY to your backend.
-    // Never expose secret keys in frontend JS for live payments.
-    /* ═══════════════════════════════════════════════════════ */
 
     let currentOrder = null;
 
@@ -374,13 +339,9 @@
       try { return JSON.parse(localStorage.getItem('cart')) || []; } catch(e) { return []; }
     }
 
-    function initCheckout() {
-      renderSummary(readCart());
-    }
-
     document.readyState === 'loading'
-      ? document.addEventListener('DOMContentLoaded', initCheckout)
-      : initCheckout();
+      ? document.addEventListener('DOMContentLoaded', () => renderSummary(readCart()))
+      : renderSummary(readCart());
 
     function renderSummary(cart) {
       let total = 0, html = '';
@@ -421,9 +382,6 @@
       return 'GS-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(Math.random()*1000);
     }
 
-    /* ══════════════════════════════════════════════════════
-       STEP 1 — Create Cashfree Order & Open Modal
-    ══════════════════════════════════════════════════════ */
     async function placeOrder() {
       if (!validate()) { showToast('Please fill in all required fields.', 'error'); return; }
 
@@ -439,19 +397,14 @@
         pincode: document.getElementById('inp-pincode').value.trim(),
         email:   document.getElementById('inp-email').value.trim(),
       };
-      const total  = cart.reduce((s,i) => s + ((Number(i.qty)||1)*(Number(i.price)||0)), 0);
+      const total   = cart.reduce((s,i) => s + ((Number(i.qty)||1)*(Number(i.price)||0)), 0);
       const orderId = generateOrderId();
 
       try {
-        /* Create order via Cashfree API */
-        const res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://api.cashfree.com/pg/orders'), {
+        /* ✅ Calls YOUR Vercel backend — secret key is safe there */
+        const res = await fetch('/api/create-order', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-version': '2023-08-01',
-            'x-client-id':     CF_APP_ID,
-            'x-client-secret': CF_SECRET_KEY,
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             order_id:       orderId,
             order_amount:   parseFloat(total.toFixed(2)),
@@ -462,9 +415,7 @@
               customer_email: user.email || 'noemail@glowscent.in',
               customer_phone: user.phone,
             },
-            order_meta: {
-              notify_url: '', // Add your webhook URL here if needed
-            },
+            order_meta: { notify_url: '' },
             order_note: `${user.address}${user.city ? ', '+user.city : ''}${user.pincode ? ' - '+user.pincode : ''}`,
           })
         });
@@ -474,17 +425,10 @@
           throw new Error(data.message || 'Could not create order');
         }
 
-        currentOrder = {
-          orderId,
-          amount: total,
-          paymentSessionId: data.payment_session_id,
-          user,
-          cart,
-        };
+        currentOrder = { orderId, amount: total, paymentSessionId: data.payment_session_id, user, cart };
 
-        /* Populate modal */
-        document.getElementById('modalOrderId').textContent  = 'Order ' + orderId;
-        document.getElementById('modalAmount').textContent   = '₹' + total.toFixed(2);
+        document.getElementById('modalOrderId').textContent = 'Order ' + orderId;
+        document.getElementById('modalAmount').textContent  = '₹' + total.toFixed(2);
         showStep('ready');
         document.getElementById('paymentModal').classList.add('open');
         advanceProgress();
@@ -497,58 +441,45 @@
       btn.classList.remove('loading'); btn.disabled = false;
     }
 
-    /* ══════════════════════════════════════════════════════
-       STEP 2 — Launch Cashfree Checkout
-    ══════════════════════════════════════════════════════ */
-  async function launchCashfree() {
-  if (!currentOrder) return;
-  document.getElementById('payNowBtn').disabled = true;
+    async function launchCashfree() {
+      if (!currentOrder) return;
+      document.getElementById('payNowBtn').disabled = true;
 
-  try {
-    const cashfree = await Cashfree({ mode: CF_ENV });
+      try {
+        const cashfree = await Cashfree({ mode: CF_ENV });
 
-    const result = await cashfree.checkout({
-      paymentSessionId: currentOrder.paymentSessionId,
-      redirectTarget: '_modal',
-      components: ["upi-qr"],   // ← only show QR code
-    });
+        const result = await cashfree.checkout({
+          paymentSessionId: currentOrder.paymentSessionId,
+          redirectTarget: '_modal',
+        });
 
-    if (result.error) {
-      showStep('failed');
-      document.getElementById('failReason').textContent =
-        result.error.message || 'Payment was not completed.';
-      return;
+        if (result.error) {
+          showStep('failed');
+          document.getElementById('failReason').textContent = result.error.message || 'Payment was not completed.';
+          return;
+        }
+
+        if (result.redirect || result.paymentDetails) {
+          showStep('verifying');
+          verifyPayment(currentOrder.orderId);
+        }
+
+      } catch(err) {
+        showStep('failed');
+        document.getElementById('failReason').textContent = 'Payment error: ' + err.message;
+      }
     }
 
-    if (result.redirect || result.paymentDetails) {
-      showStep('verifying');
-      verifyPayment(currentOrder.orderId);
-    }
-
-  } catch(err) {
-    showStep('failed');
-    document.getElementById('failReason').textContent = 'Payment error: ' + err.message;
-  }
-}
-    /* ══════════════════════════════════════════════════════
-       STEP 3 — Verify Payment with Cashfree
-    ══════════════════════════════════════════════════════ */
     async function verifyPayment(orderId, attempts = 0) {
       showStep('verifying');
       try {
-        const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(`https://api.cashfree.com/pg/orders/${orderId}`), {
-          headers: {
-            'x-api-version':   '2023-08-01',
-            'x-client-id':     CF_APP_ID,
-            'x-client-secret': CF_SECRET_KEY,
-          }
-        });
+        /* ✅ Calls YOUR Vercel backend — secret key is safe there */
+        const res  = await fetch(`/api/verify-order?orderId=${orderId}`);
         const data = await res.json();
 
         if (data.order_status === 'PAID') {
           onPaymentSuccess();
         } else if (data.order_status === 'ACTIVE' && attempts < 5) {
-          // Still processing — poll again after 2s
           setTimeout(() => verifyPayment(orderId, attempts + 1), 2000);
         } else {
           showStep('failed');
@@ -565,13 +496,9 @@
       }
     }
 
-    /* ══════════════════════════════════════════════════════
-       STEP 4 — Payment Confirmed: Show WhatsApp Button
-    ══════════════════════════════════════════════════════ */
     function onPaymentSuccess() {
       const { orderId, amount, user, cart } = currentOrder;
 
-      /* WhatsApp message to MERCHANT — fires automatically via link */
       const merchantMsg =
         `🛍️ *New Order Received — Glow & Scent*\n\n` +
         `📦 *Order ID:* ${orderId}\n` +
@@ -587,49 +514,27 @@
         `\n\n💰 *Total Paid: ₹${amount.toFixed(2)}*\n` +
         `⏰ *Time:* ${new Date().toLocaleString('en-IN')}`;
 
-      /* WhatsApp message to CUSTOMER (confirmation link) */
       const customerMsg =
         `🌸 *Thank you for your order at Glow & Scent!*\n\n` +
         `📦 *Order ID:* ${orderId}\n` +
         `💰 *Amount Paid:* ₹${amount.toFixed(2)}\n\n` +
         `We'll process your order soon. For any queries, reply to this message.`;
 
-      const merchantWaLink  = `https://wa.me/${WHATSAPP_NO}?text=${encodeURIComponent(merchantMsg)}`;
-      const customerWaLink  = `https://wa.me/${user.phone}?text=${encodeURIComponent(customerMsg)}`;
-
-      /* Auto-open merchant WhatsApp notification */
-      window.open(merchantWaLink, '_blank');
-
-      /* Set customer confirmation button */
-      document.getElementById('waConfirmBtn').href = customerWaLink;
-
+      window.open(`https://wa.me/${WHATSAPP_NO}?text=${encodeURIComponent(merchantMsg)}`, '_blank');
+      document.getElementById('waConfirmBtn').href = `https://wa.me/${user.phone}?text=${encodeURIComponent(customerMsg)}`;
       document.getElementById('successOrderId').textContent = 'Order ' + orderId;
       document.getElementById('successAmount').textContent  = '₹' + amount.toFixed(2);
 
       showStep('success');
       showToast('Payment confirmed! 🎉', 'success');
-
-      /* Save to session */
       sessionStorage.setItem('lastOrderId', orderId);
       sessionStorage.setItem('lastAmount', amount);
-
-      /* Clear cart */
       localStorage.removeItem('cart');
     }
 
-    function retryPayment() {
-      document.getElementById('payNowBtn').disabled = false;
-      showStep('ready');
-    }
-
-    function orderDone() {
-      window.location.href = 'order.html';
-    }
-
-    function closeModal() {
-      document.getElementById('paymentModal').classList.remove('open');
-      currentOrder = null;
-    }
+    function retryPayment() { document.getElementById('payNowBtn').disabled = false; showStep('ready'); }
+    function orderDone() { window.location.href = 'order.html'; }
+    function closeModal() { document.getElementById('paymentModal').classList.remove('open'); currentOrder = null; }
 
     function showStep(name) {
       ['ready','verifying','success','failed'].forEach(s => {
@@ -647,8 +552,7 @@
     let toastTimer;
     function showToast(msg, type = '') {
       const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.className = 'toast' + (type ? ' ' + type : '');
+      t.textContent = msg; t.className = 'toast' + (type ? ' ' + type : '');
       t.classList.add('show');
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
@@ -656,3 +560,4 @@
   </script>
 </body>
 </html>
+r
